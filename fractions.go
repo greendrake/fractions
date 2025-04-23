@@ -90,23 +90,21 @@ func GetInteger(frac *frac) int {
 
 // conversion functions //
 
-func FloatToFrac(value float64) *frac {
+func FloatToFrac(value float64) (*frac, error) {
 	integer := int(value)
 	decimal := value - float64(integer)
 
 	for d := 1; d < 100; d++ {
 		for n := 1; n < d; n++ {
 			if (float64(n)/float64(d)) <= (decimal+0.01) && (float64(n)/float64(d)) >= (decimal-0.01) {
-				return &frac{integer, n, d}
+				return &frac{integer, n, d}, nil
 			}
 		}
 	}
 	if value >= 0 {
-		print("\nERROR: no viable fractions found\n")
-	} else {
-		print("\nERROR: no non-positive values allowed\n")
+		return nil, fmt.Errorf("No viable fractions found")
 	}
-	return &frac{0, 0, 0}
+	return nil, fmt.Errorf("No non-positive values allowed")
 }
 
 func FracToFloat(frac *frac) float64 {
@@ -220,5 +218,6 @@ func DivideInt(frac1 *frac, value int) *frac {
 
 func PowerFrac(frac1 *frac, value int) *frac {
 	FloatValue := math.Pow(FracToFloat(frac1), float64(value))
-	return FloatToFrac(FloatValue)
+	frac, _ := FloatToFrac(FloatValue)
+	return frac
 }

@@ -7,7 +7,7 @@ package fractions_test
 import (
 	"testing"
 
-	"github.com/TimoKats/fractions"
+	"github.com/greendrake/fractions"
 )
 
 func TestFractions(t *testing.T) {
@@ -16,7 +16,7 @@ func TestFractions(t *testing.T) {
 	Ey4 := 2.5
 
 	// the operations I aim to test
-	y1 := fractions.FloatToFrac(1.5)
+	y1, _ := fractions.FloatToFrac(1.5)
 	y2 := fractions.MakeFrac(0, 1, 2)
 
 	y3 := fractions.DivideFrac(y1, y2)
